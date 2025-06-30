@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: popin;
+    }
+    body{
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+    }
+    .container{
+        background: grey;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+        width: 400px;
+    }
+    input{
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        background-color: rgb(107, 94, 94);
+        color: white;
+        
+    }
+    input::placeholder{
+        color: white;
+        font-size: 16px;
+    }
+    button{
+        margin: 10px 0px;
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 10px;
+        border: none;
+        background-color: aquamarine;
+        color: black;
+    }
+    .result{
+        margin-left: 10px;
+        width: 100%;
+        
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-size: 20px;
+        color: white;
+    }
+</style>
+<body>
+    <div class="container">
+<input type="text" id="cityname" placeholder="Enter city name">
+<button class="Search" onclick="getweather()">Search</button>
+<div class="result" style="display: none;">
+    <h3 class="cityname"></h3>
+    <p><strong>Temperature:</strong>
+    <span class="temp"></span> C</p>
+    <p><strong>Weather:</strong>
+    <span class="description"></span></p>
+</div>
+    </div>
+    <script>
+ async function getweather(){
+    const input=document.querySelector('#cityname').value;
+       const apikey="59de500e928fd873d59dab30946d8032"
+    const url=`https://api.openweathermap.org/data/2.5/weather?q=${input}&appid=${apikey}&units=metric`;
+
+    try {
+        const respond=await fetch(url);
+        if(!respond.ok){
+            throw new Error("City not fond");
+            
+        }
+        const data= await respond.json();
+      
+        document.querySelector('.cityname').textContent=data.name;
+        document.querySelector('.temp').textContent=data.
+        main.temp;
+        document.querySelector('.description').textContent=data.weather[0].description;
+        document.querySelector('.result').style.display='block'
+        
+
+    } catch (error) {
+        alert("There is an error");
+          document.querySelector('.result').style.display='none'
+        
+
+        
+    }
+ 
+}
+    </script>
+</body>
+</html>
